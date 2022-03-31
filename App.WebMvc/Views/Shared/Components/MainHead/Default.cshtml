@@ -1,0 +1,73 @@
+﻿@model List<Post>
+
+@{
+    ViewData["Title"] = "_MainHead";
+}
+
+<div class="pageheader-content row">
+    <div class="col-full">
+
+        <div class="featured">
+            
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                @if(i <= 0)
+                {
+                   <div class="featured__column featured__column--big">
+                        <div class="entry" style="background-image:url('@Model[i].Media');">
+
+                            <div class="entry__content">
+                                @foreach(var item in Model[i].Categories)
+                                {
+                                    <span class="entry__category"><a href="#0">@item.CategoryName</a></span>
+                                }
+                                <h1><a asp-controller="Post" asp-action="Detail" asp-route-i="@Model[i].Id">@Model[i].Content.Substring(0, Model[i].Content.Substring(0, 100).LastIndexOf(" ")).</a></h1>
+
+                                <div class="entry__info">
+                                    <a href="#0" class="entry__profile-pic">
+                                        <img class="avatar" src="@Model[i].User.ProfileImagePath" alt="">
+                                    </a>
+
+                                    <ul class="entry__meta">
+                                        <li><a href="#0">@Model[i].User.Name</a></li>
+                                        <li>@(((DateTime)Model[i].CreatedAt).ToString("MMMM dd, yyyy"))</li>
+                                    </ul>
+                                </div>
+                            </div> <!-- end entry__content -->
+
+                     </div> <!-- end entry -->
+                 </div> <!-- end featured__big -->
+                }
+                else
+                {
+                <div class="featured__column featured__column--small">
+                    <div class="entry" style="background-image:url('@Model[i].Media');">
+
+                        <div class="entry__content">
+                            @foreach(var item in Model[i].Categories)
+                            {
+                                <span class="entry__category"><a href="#0">@item.CategoryName</a></span>
+                            }       
+                            <h1><a asp-controller="Post" asp-action="Detail" asp-route-i="@Model[i].Id">@Model[i].Content.Substring(0, Model[i].Content.Substring(0, 50).LastIndexOf(" ")).</a></h1>
+
+                            <div class="entry__info">
+                                <a href="#0" class="entry__profile-pic">
+                                    <img class="avatar" src="@Model[i].User.ProfileImagePath" alt="">
+                                </a>
+
+                                <ul class="entry__meta">
+                                    <li><a href="#0">@Model[i].User.Name</a></li>
+                                    <li>@(((DateTime)Model[i].CreatedAt).ToString("MMMM dd, yyyy"))</li>
+                                </ul>
+                            </div>
+                        </div> <!-- end entry__content -->
+
+                    </div> <!-- end entry -->
+                </div>
+                 }
+            }
+        </div> <!-- end featured -->
+
+    </div> <!-- end col-full -->
+</div> <!-- end pageheader-content row -->
+

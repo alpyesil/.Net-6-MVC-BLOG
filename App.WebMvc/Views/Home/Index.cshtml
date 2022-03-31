@@ -1,0 +1,76 @@
+﻿@model List<Post>
+
+@section Main{
+    @await Component.InvokeAsync("MainHead");
+}
+
+    <section class="s-content">
+
+        <div class="row masonry-wrap">
+            <div class="masonry">
+
+                <div class="grid-sizer"></div>
+            @foreach (var item in Model)
+            {
+               <article class="masonry__brick entry format-standard" data-aos="fade-up">
+
+                   <div class="entry__thumb">
+                       <a asp-controller="Post" asp-action="Detail" asp-route-i="@item.Id" class="entry__thumb-link">
+                           <img src="@item.Media"
+                            srcset="@item.Media 1x, images/thumbs/masonry/lamp-800.jpg 2x" alt="">
+                       </a>
+                   </div>
+
+                   <div class="entry__text">
+                       <div class="entry__header">
+
+                           <div class="entry__date">
+                               <a asp-controller="Post" asp-action="Detail" asp-route-i="@item.Id">@(((DateTime)item.CreatedAt).ToString("MMMM dd, yyyy"))</a>
+                           </div>
+                           <h1 class="entry__title"><a asp-controller="Post" asp-action="Detail" asp-route-i="@item.Id">@item.Title</a></h1>
+
+                       </div>
+                       <div class="entry__excerpt">
+                           <p>
+                               @item.Content.Substring(0, item.Content.Substring(0, 100).LastIndexOf(" "))...
+                           </p>
+                       </div>
+                       <div class="entry__meta">
+                           <span class="entry__meta-links">
+                           @foreach(var category in @item.CategoryPosts)
+                           {
+                              <a asp-controller="Category" asp-action="Detail" asp-route-q="@category.Category.Id">@category.Category.CategoryName</a>                                    
+                           }
+                           </span>
+                       </div>
+                   </div>
+               </article> <!-- end article -->
+            }
+            </div> <!-- end masonry -->
+        </div> <!-- end masonry-wrap -->
+
+        <div class="row">
+            <div class="col-full">
+                <nav class="pgn">
+                    <ul>
+                        <li><a class="pgn__prev" href="#0">Prev</a></li>
+                        <li><a class="pgn__num" href="#0">1</a></li>
+                        <li><span class="pgn__num current">2</span></li>
+                        <li><a class="pgn__num" href="#0">3</a></li>
+                        <li><a class="pgn__num" href="#0">4</a></li>
+                        <li><a class="pgn__num" href="#0">5</a></li>
+                        <li><span class="pgn__num dots">…</span></li>
+                        <li><a class="pgn__num" href="#0">8</a></li>
+                        <li><a class="pgn__next" href="#0">Next</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+    </section>
+
+
+    <section class="s-extra">
+    @await Component.InvokeAsync("PopulerPost")
+    @await Component.InvokeAsync("Tag")
+    </section>
